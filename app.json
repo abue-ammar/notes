@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.mynotes.app"
     },
     "web": {
       "bundler": "metro",
@@ -35,6 +36,17 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": "myapp://",
+        "asyncRoutes": {
+          "app": "./app/**/*.tsx"
+        }
+      },
+      "eas": {
+        "projectId": "5d2f4723-a88d-4c42-b694-8a76b8744ece"
+      }
     }
   }
 }
