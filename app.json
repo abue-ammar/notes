@@ -23,14 +23,13 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router",
       [
-        "expo-splash-screen",
+        "expo-router",
         {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "origin": "myapp://",
+          "asyncRoutes": {
+            "app": "./app/**/*.tsx"
+          }
         }
       ]
     ],
