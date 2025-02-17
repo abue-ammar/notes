@@ -9,40 +9,44 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+
+import { Colors } from "../constants/Colors";
 import { NotesContext } from "../context/NotesContext";
 import { ThemeContext } from "../context/ThemeContext";
-
 export default function Home() {
   const { notes } = useContext(NotesContext);
   const { theme } = useContext(ThemeContext);
   const router = useRouter();
-
+  const currentColors = Colors[theme];
   return (
-    <View style={[styles.container, theme === "dark" && styles.darkContainer]}>
+    <View
+      style={[styles.container, { backgroundColor: currentColors.background }]}
+    >
       {/* Header */}
       <View style={styles.header}>
-        <Text style={[styles.headerTitle, theme === "dark" && styles.darkText]}>
+        <Text style={[styles.headerTitle, { color: currentColors.text }]}>
           Notes
         </Text>
-        <View style={styles.headerRight}>
-          {/* <Text style={[styles.dateText, theme === "dark" && styles.darkText]}>
-            31 Oct
-          </Text> */}
-          <TouchableOpacity onPress={() => router.push("/settings")}>
-            <Ionicons
-              name="settings-outline"
-              size={24}
-              color={theme === "dark" ? "white" : "black"}
-            />
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity onPress={() => router.push("/settings")}>
+          <Ionicons
+            name="settings-outline"
+            size={24}
+            color={currentColors.text}
+          />
+        </TouchableOpacity>
       </View>
       {/* Notes List */}
       <ScrollView style={styles.notesList}>
         {notes.map((note) => (
           <TouchableOpacity
             key={note.id}
-            style={[styles.card, theme === "dark" && styles.darkCard]}
+            style={[
+              styles.card,
+              {
+                backgroundColor: currentColors.cardBackground,
+                borderColor: currentColors.cardBorder,
+              },
+            ]}
             onPress={() =>
               router.push({
                 pathname: "/(modal)/noteEditor",
@@ -50,14 +54,10 @@ export default function Home() {
               })
             }
           >
-            <Text
-              style={[styles.cardTitle, theme === "dark" && styles.darkText]}
-            >
+            <Text style={[styles.cardTitle, { color: currentColors.text }]}>
               {note.title}
             </Text>
-            <Text
-              style={[styles.cardBody, theme === "dark" && styles.darkText]}
-            >
+            <Text style={[styles.cardBody, { color: currentColors.text }]}>
               {note.body}
             </Text>
           </TouchableOpacity>
@@ -65,7 +65,7 @@ export default function Home() {
       </ScrollView>
       {/* Floating Action Button */}
       <TouchableOpacity
-        style={styles.fab}
+        style={[styles.fab, { backgroundColor: currentColors.fabBackground }]}
         onPress={() => router.push("/(modal)/noteEditor")}
       >
         <Ionicons name="add-outline" size={28} color="white" />
@@ -75,42 +75,36 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "white", padding: 16 },
-  darkContainer: { backgroundColor: "#222" },
+  container: { flex: 1, padding: 16 },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 16,
   },
-  headerTitle: { fontSize: 32, fontWeight: "bold", color: "black" },
+  headerTitle: { fontSize: 32, fontWeight: "bold" },
   headerRight: { flexDirection: "row", alignItems: "center" },
-  dateText: { fontSize: 18, color: "gray" },
-  settingsIcon: { fontSize: 24, color: "black" },
+  dateText: { fontSize: 18 },
+  settingsIcon: { fontSize: 24 },
   notesList: { flex: 1 },
   card: {
-    backgroundColor: "white",
     borderWidth: 1,
-    borderColor: "#ddd",
     borderRadius: 8,
     padding: 16,
     marginBottom: 12,
-    // Use boxShadow for web (deprecated shadow* props removed)
-    // boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
   },
-  darkCard: { backgroundColor: "#333", borderColor: "#555" },
+
   cardTitle: {
     fontSize: 20,
     fontWeight: "600",
     marginBottom: 4,
-    color: "black",
   },
-  cardBody: { fontSize: 14, color: "gray" },
+  cardBody: { fontSize: 14 },
   fab: {
     position: "absolute",
     right: 24,
     bottom: 24,
-    backgroundColor: "black",
+
     width: 56,
     height: 56,
     borderRadius: 28,
@@ -118,6 +112,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     elevation: 4,
   },
-  fabIcon: { color: "white", fontSize: 24 },
-  darkText: { color: "white" },
+  fabIcon: { fontSize: 24 },
 });

@@ -3,7 +3,7 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
     },
     "jsx": "react-native",
     "lib": ["dom", "esnext"],

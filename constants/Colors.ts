@@ -1,26 +1,30 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
-
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
-
 export const Colors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    background: "#ffffff",
+    text: "#000000",
+    placeholder: "#999999",
+    inputBackground: "#ffffff",
+    inputBorder: "#dddddd",
+    buttonPrimary: "#000000",
+    buttonSecondary: "#cccccc",
+    cardBackground: "#ffffff",
+    cardBorder: "#dddddd",
+    fabBackground: "#000000",
+    danger: "#ff0000",
+    headerBackground: "transparent",
   },
   dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    background: "#222222",
+    text: "#ffffff",
+    placeholder: "#aaaaaa",
+    inputBackground: "#333333",
+    inputBorder: "#555555",
+    buttonPrimary: "#444444",
+    buttonSecondary: "#444444",
+    cardBackground: "#333333",
+    cardBorder: "#555555",
+    fabBackground: "#000000",
+    danger: "#ff0000",
+    headerBackground: "transparent",
   },
 };

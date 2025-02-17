@@ -1,4 +1,4 @@
-// app/(modal)/noteEditor.js
+import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useContext, useEffect, useState } from "react";
 import {
@@ -8,9 +8,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Colors } from "../../constants/Colors";
 import { NotesContext } from "../../context/NotesContext";
 import { ThemeContext } from "../../context/ThemeContext";
-import { Ionicons } from "@expo/vector-icons";
 
 export default function NoteEditor() {
   const router = useRouter();
@@ -46,15 +46,23 @@ export default function NoteEditor() {
     router.back();
   };
 
+  const currentColors = Colors[theme];
+
   return (
-    <View style={[styles.container, theme === "dark" && styles.darkContainer]}>
+    <View
+      style={[styles.container, { backgroundColor: currentColors.background }]}
+    >
       <View style={styles.header}>
-        <Text style={[styles.headerTitle, theme === "dark" && styles.darkText]}>
+        <Text style={[styles.headerTitle, { color: currentColors.text }]}>
           {noteToEdit ? "Edit Note" : "New Note"}
         </Text>
         {noteToEdit && (
           <TouchableOpacity onPress={onDelete}>
-              <Ionicons name="trash-outline" size={24} color="red" />
+            <Ionicons
+              name="trash-outline"
+              size={24}
+              color={currentColors.danger}
+            />
           </TouchableOpacity>
         )}
       </View>
@@ -62,43 +70,53 @@ export default function NoteEditor() {
         value={title}
         onChangeText={setTitle}
         placeholder="Title"
-        placeholderTextColor={theme === "dark" ? "#aaa" : "#999"}
-        style={[styles.titleInput, theme === "dark" && styles.darkInput]}
+        placeholderTextColor={currentColors.placeholder}
+        style={[
+          styles.titleInput,
+          {
+            backgroundColor: currentColors.inputBackground,
+            borderColor: currentColors.inputBorder,
+            color: currentColors.text,
+          },
+        ]}
       />
       <TextInput
         value={body}
         onChangeText={setBody}
         placeholder="Write your note..."
-        placeholderTextColor={theme === "dark" ? "#aaa" : "#999"}
-        style={[styles.bodyInput, theme === "dark" && styles.darkInput]}
+        placeholderTextColor={currentColors.placeholder}
+        style={[
+          styles.bodyInput,
+          {
+            backgroundColor: currentColors.inputBackground,
+            borderColor: currentColors.inputBorder,
+            color: currentColors.text,
+          },
+        ]}
         multiline
       />
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={() => router.back()}
-          style={[styles.cancelButton, theme === "dark" && styles.darkButton]}
+          style={[
+            styles.cancelButton,
+            { backgroundColor: currentColors.buttonSecondary },
+          ]}
         >
           <Text
-            style={[
-              styles.cancelButtonText,
-              theme === "dark" && styles.darkButtonText,
-            ]}
+            style={[styles.cancelButtonText, { color: currentColors.text }]}
           >
             Cancel
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={onSave}
-          style={[styles.saveButton, theme === "dark" && styles.darkButton]}
+          style={[
+            styles.saveButton,
+            { backgroundColor: currentColors.buttonPrimary },
+          ]}
         >
-          <Text
-            style={[
-              styles.saveButtonText,
-              theme === "dark" && styles.darkButtonText,
-            ]}
-          >
-            Save
-          </Text>
+          <Text style={[styles.saveButtonText, { color: "#fff" }]}>Save</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -106,57 +124,45 @@ export default function NoteEditor() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "white", padding: 16 },
-  darkContainer: { backgroundColor: "#222" },
+  container: { flex: 1, padding: 16 },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 16,
   },
-  headerTitle: { fontSize: 24, fontWeight: "bold", color: "black" },
-  deleteIcon: { fontSize: 24, color: "red" },
+  headerTitle: { fontSize: 24, fontWeight: "bold" },
   titleInput: {
     borderWidth: 1,
-    borderColor: "#ddd",
     borderRadius: 8,
     padding: 12,
     fontSize: 18,
     marginBottom: 12,
-    color: "black",
   },
   bodyInput: {
     borderWidth: 1,
-    borderColor: "#ddd",
     borderRadius: 8,
     padding: 12,
     fontSize: 16,
     flex: 1,
     textAlignVertical: "top",
-    color: "black",
   },
-  darkInput: { backgroundColor: "#333", color: "white", borderColor: "#555" },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "flex-end",
     marginTop: 12,
   },
   cancelButton: {
-    backgroundColor: "#ccc",
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 8,
     marginRight: 8,
   },
-  cancelButtonText: { fontSize: 16, color: "black" },
+  cancelButtonText: { fontSize: 16 },
   saveButton: {
-    backgroundColor: "black",
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 8,
   },
-  saveButtonText: { fontSize: 16, color: "white" },
-  darkText: { color: "white" },
-  darkButton: { backgroundColor: "#444" },
-  darkButtonText: { color: "white" },
+  saveButtonText: { fontSize: 16 },
 });
