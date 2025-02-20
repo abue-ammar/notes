@@ -1,16 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Switch, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 import { Colors } from "../constants/Colors";
 import { useTheme } from "../context/ThemeContext";
 export default function Settings() {
   const { theme, toggleTheme } = useTheme();
 
   const currentColors = Colors[theme];
+  const opacity = useSharedValue(0); // Start with opacity 0 (invisible)
 
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: withTiming(opacity.value, { duration: 1000 }), // Smooth fade-in effect
+    };
+  });
+
+  useEffect(() => {
+    opacity.value = 1;
+  }, []);
   return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: currentColors.background }]}
+    <Animated.View
+      style={[
+        styles.container,
+        { backgroundColor: currentColors.background },
+        animatedStyle,
+      ]}
     >
       <Text style={[styles.title, { color: currentColors.text }]}>
         Settings
@@ -21,7 +39,7 @@ export default function Settings() {
         </Text>
         <Switch value={theme === "dark"} onValueChange={toggleTheme} />
       </View>
-    </SafeAreaView>
+    </Animated.View>
   );
 }
 

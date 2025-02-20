@@ -1,7 +1,7 @@
 // app/index.js
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -9,8 +9,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 import { Colors } from "../constants/Colors";
 import { NotesContext } from "../context/NotesContext";
 import { useTheme } from "../context/ThemeContext";
@@ -19,9 +23,24 @@ export default function Home() {
   const { theme } = useTheme();
   const router = useRouter();
   const currentColors = Colors[theme];
+  const opacity = useSharedValue(0); // Start with opacity 0 (invisible)
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: withTiming(opacity.value, { duration: 1000 }), // Smooth fade-in effect
+    };
+  });
+
+  useEffect(() => {
+    opacity.value = 1; // Trigger fade-in after component mount
+  }, []);
   return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: currentColors.background }]}
+    <Animated.View
+      style={[
+        styles.container,
+        { backgroundColor: currentColors.background },
+        animatedStyle,
+      ]}
     >
       {/* Header */}
       <View style={styles.header}>
@@ -71,7 +90,7 @@ export default function Home() {
       >
         <Ionicons name="add-outline" size={28} color="white" />
       </TouchableOpacity>
-    </SafeAreaView>
+    </Animated.View>
   );
 }
 
