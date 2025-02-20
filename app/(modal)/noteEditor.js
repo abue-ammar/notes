@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../../constants/Colors";
 import { NotesContext } from "../../context/NotesContext";
 import { useTheme } from "../../context/ThemeContext";
@@ -49,7 +50,7 @@ export default function NoteEditor() {
   const currentColors = Colors[theme];
 
   return (
-    <View
+    <SafeAreaView
       style={[styles.container, { backgroundColor: currentColors.background }]}
     >
       <View style={styles.header}>
@@ -119,7 +120,7 @@ export default function NoteEditor() {
           <Text style={[styles.saveButtonText, { color: "#fff" }]}>Save</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

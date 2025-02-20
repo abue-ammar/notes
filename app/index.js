@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Colors } from "../constants/Colors";
 import { NotesContext } from "../context/NotesContext";
@@ -19,7 +20,7 @@ export default function Home() {
   const router = useRouter();
   const currentColors = Colors[theme];
   return (
-    <View
+    <SafeAreaView
       style={[styles.container, { backgroundColor: currentColors.background }]}
     >
       {/* Header */}
@@ -70,7 +71,7 @@ export default function Home() {
       >
         <Ionicons name="add-outline" size={28} color="white" />
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 

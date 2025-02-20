@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Switch, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../constants/Colors";
 import { useTheme } from "../context/ThemeContext";
 export default function Settings() {
@@ -8,7 +9,7 @@ export default function Settings() {
   const currentColors = Colors[theme];
 
   return (
-    <View
+    <SafeAreaView
       style={[styles.container, { backgroundColor: currentColors.background }]}
     >
       <Text style={[styles.title, { color: currentColors.text }]}>
@@ -20,7 +21,7 @@ export default function Settings() {
         </Text>
         <Switch value={theme === "dark"} onValueChange={toggleTheme} />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
