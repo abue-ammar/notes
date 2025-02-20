@@ -10,13 +10,13 @@ import {
 } from "react-native";
 import { Colors } from "../../constants/Colors";
 import { NotesContext } from "../../context/NotesContext";
-import { ThemeContext } from "../../context/ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
 
 export default function NoteEditor() {
   const router = useRouter();
   const { id } = useLocalSearchParams();
   const { notes, addNote, updateNote, deleteNote } = useContext(NotesContext);
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useTheme();
 
   const noteToEdit = notes.find((note) => note.id === id);
 

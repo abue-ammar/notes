@@ -12,10 +12,10 @@ import {
 
 import { Colors } from "../constants/Colors";
 import { NotesContext } from "../context/NotesContext";
-import { ThemeContext } from "../context/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 export default function Home() {
   const { notes } = useContext(NotesContext);
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useTheme();
   const router = useRouter();
   const currentColors = Colors[theme];
   return (

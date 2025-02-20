@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { StyleSheet, Switch, Text, View } from "react-native";
 import { Colors } from "../constants/Colors";
-import { ThemeContext } from "../context/ThemeContext";
-
+import { useTheme } from "../context/ThemeContext";
 export default function Settings() {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme, toggleTheme } = useTheme();
+
   const currentColors = Colors[theme];
 
   return (
